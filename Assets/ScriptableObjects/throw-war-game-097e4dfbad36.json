@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "throw-war-game",
+  "private_key_id": "097e4dfbad369ae108a84342d547e62a5749f291",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCQ0RSkqhtxpelp\nE0fcse1W6F6Xjyh98VD+bJqclYIajJq7BpEp2XCGixocU/q5N8FDpKFqRIeoh/PS\nfSENsvSkedF9pUeWPlp2Rl+H+8tEa6zMC9qdfYB+F0LuuqjNhru1a8qO/xYtf65X\nVoyWN6esRWRITcyVlzOLDLIxxG2IJDxOHgo8QwMh04Ec+Gw1gn10I9yP1UISsZbB\nxUlUHNt++MGm0zOL8+3ddiNaKuybrh/cksXWO2uWzbwXg49iNWo375+79t8E0ODv\nAx4UKmBQiFYQvziN0iPBzzIHf5A5e4dePrQOochJFX7tI+QVPEKaweyutuvDIqoo\nRgfFrKmhAgMBAAECggEAEjLQHQxKdBr1LNDxNiz+5i2/21xwanlFpB9qQ5SvO55h\nQHEIE4IBd8rpvlcYWifFR/abmULg6F8jVxeF7JaJU1UCrD81so4F6LiZvzk3d1Lv\nrVmtAJ8Zo17ReLYoyeEtXBReaV9pflC+DDgyZRs73TSAMGzkcYUFg2sWRpZIbHPu\n2y9kVGFwkNau8DqxTZI0N6Z75pACBf4Ag4et2qdVtBahIOSMzF4uyArHtngGMWho\nCPTnpknBkrsGMkl7hQkPtbXlFA1kmCR0Qt74C9rbzA/2Pnlh0sfnX30Nf8yiEKNA\nyAiSgWfZ2AG+JVrEuTZP7pvPjOHS5lxjOk+gP90NNQKBgQDHSenIGYzdTt6A/8BD\nGOfRfW6D4M2MO06WtVTL349CFm2MNBl1w2xyMaO3phKUeCLpVrcSsTSeqFyrOY+3\nv/+LwGz02sWhEqu4SenYDcDgojBeVgSNu4bXRi6QJGJTOgNFDwxP76oY/QUo1J00\nnbLc7VDjqBfltvYI7gI7eI8NvQKBgQC6BuiTfU4idVUConjuTOaV3hVm8ydN9Wm+\nx2tPdsUOusIkm5J38qoHPzJwY7JeQ7Zv4od7b6WJBWToEzuRHnlURkUmrF2x/zLs\nmJiGtWMJTNM4xFKKzMUI0QCA6WGcmpeiD/35ePPOmmaLA2ZBLnkA785cKWp1qBsk\nbU0w+Y9vtQKBgQCGSY8Hr/fUtK2IHU3vqJuk9TGAGf5HzTrioOO30TgWX0iIHh89\n1GaB+GMKgBSrCNz1gOIx7Ui41FhFZK8sMWtAP3Tr9XMQW6VstBmn5XSfqYqQNsQw\nwTlWXEtKA8phrIjBgydXwfZLiktsvQAFkXISHrPQA9e+ie/2CnNkoZM7vQKBgAQT\neq0gpcGjiIVSQgwWq0bFYvqqgUX4BqUjgXpwQ8ka1n4u2nq+WnNmMxi7VoEyQqEY\n+Zb+z0W9VISxRzDa1hW+pG1AgZ0Q1nDQtybcepsNj+NCifx4mCilS7mHY5gm2wO2\nDf6VY+I3B+Ar5uWuuwAGQSNL1QVW9aFKs9JK5ZWxAoGBAIgBX0kPKSksF7M/p6h3\neoPz7nHf09+FZXi9+9AA2v3xGCCs6QNzpvxPn1lBcZu5eovXTocKE8dfhqXUfAAf\naPWtKtaU6uXv0r0IvIYr4vckgKJlBbSnncYfOrBjxDUNfBiMh7S0bjyqhFLTW78O\n9FKNloHGdp88fv1jQrmx7prJ\n-----END PRIVATE KEY-----\n",
+  "client_email": "throw-war-game@throw-war-game.iam.gserviceaccount.com",
+  "client_id": "104864021990157060848",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/throw-war-game%40throw-war-game.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

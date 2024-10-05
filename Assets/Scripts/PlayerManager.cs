@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(ThrowObject))]

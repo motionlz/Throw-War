@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635dce324a027004a8675744ada153ed, type: 3}
+  m_Name: DataSheet
+  m_EditorClassIdentifier: 
+  keyJson: {fileID: 4900000, guid: 8f960a5cc3bc32840b93afca73b6f1dd, type: 3}
+  isShowingLog: 1
