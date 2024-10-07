@@ -11,6 +11,10 @@ public class WindSpeed : MonoBehaviour
     public float windStrength;
 
     private Rigidbody2D rb;
+    private void Start() 
+    {
+        RandomWindSpeed();
+    }
     private void Reset() 
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -23,5 +27,16 @@ public class WindSpeed : MonoBehaviour
             Vector2 windDirection = new Vector2(Mathf.Sign(windStrength), 0);
             rb.AddForce(windDirection * Mathf.Abs(windStrength));
         }
+    }
+
+    public void RandomWindSpeed()
+    {
+        windStrength = Random.Range(-10, 11);
+        UpdateMeterUI();
+    }
+
+    public void UpdateMeterUI()
+    {
+        UICenter.Instance.windSlider.UpdateUI(windStrength);
     }
 }
