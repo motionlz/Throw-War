@@ -11,11 +11,11 @@ public class ThrowObject : MonoBehaviour
     public float throwAngle = 60f;
     public bool throwLeft = false;
 
-    public void Throw(GameObject objectToThrow, float throwForce)
+    public void Throw(string objectToThrow, float throwForce)
     {
         if (objectToThrow == null) return;
 
-        GameObject thrownObject = Instantiate(objectToThrow, transform.position, Quaternion.identity);
+        GameObject thrownObject = ObjectPooling.Instance.GetFromPool(objectToThrow, transform.position, Quaternion.identity);
         Rigidbody2D rb = thrownObject.GetComponent<Rigidbody2D>();
 
         if (rb != null)

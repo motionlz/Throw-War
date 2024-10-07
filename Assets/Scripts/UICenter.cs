@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UICenter : MonoBehaviour
+public class UICenter : Singleton<UICenter>
 {
-    public static UICenter Instance { get; private set; }
     [SerializeField] WindSlider windSliderPanel;
     public WindSlider windSlider => windSliderPanel;
-
-    private void Awake() 
+    [SerializeField] Slider rightLifeSlider;
+    public Slider rightLifeBar => rightLifeSlider;
+    [SerializeField] Slider leftLifeSlider;
+    public Slider leftLifeBar => leftLifeSlider;
+    protected override void InitAfterAwake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
+
     }
 }

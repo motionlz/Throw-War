@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HitBoxManager : MonoBehaviour
+public class HitBoxManager : PlayerModule
 {
     [SerializeField] CircleCollider2D headCollider;
     [SerializeField] BoxCollider2D bodyCollider;
@@ -27,16 +28,33 @@ public class HitBoxManager : MonoBehaviour
             {
                 HeadHit();
             }
+
+            col.gameObject.SetActive(false);
         }
     }
 
     private void BodyHit()
     {
-        Debug.Log("Body");
+        TakeDamage(GameManager.Instance.gameSetting.GetValueByKey(GlobalKey.SMALL_ATTACK_DAMAGE), () => 
+        {
+            PlayAnimation(AnimationKey.BODY_HIT_ANIMATION, 1500);
+        });
     }
     private void HeadHit()
     {
-        Debug.Log("Head");
+        TakeDamage(GameManager.Instance.gameSetting.GetValueByKey(GlobalKey.NORMAL_ATTACK_DAMAGE), () =>
+        {
+            PlayAnimation(AnimationKey.HEAD_HIT_ANIMATION, 1500);
+        });
+    }
+
+    private void PlayAnimation(string key, int delay)
+    {
+        playerManager.animationController.PlayAnimation(key, delay);
+    }
+    private void TakeDamage(float value, Action OnDamage = null)
+    {
+        playerManager.lifeManager.TakeDamage(value, OnDamage);
     }
 
     public void SetColliderActive(bool isActive)

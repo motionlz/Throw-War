@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 
+[ExecuteInEditMode]
 public class GoogleSheetData : MonoBehaviour
 {
     [Header("API Settings")]
@@ -12,11 +13,17 @@ public class GoogleSheetData : MonoBehaviour
     [SerializeField]private string apiKey;
     [SerializeField]private string sheetId;
     [SerializeField]private string range;
+    [SerializeField]private bool loadOnStart = true;
     [Header("Data List")]
     [SerializeField] private List<GameSettingData> resultList = new List<GameSettingData>();
     private GameSettingData[] dataArray => resultList.ToArray();
 
     private void Start()
+    {
+        if (loadOnStart)
+            GetGoogleSheetData();
+    }
+    public void GetGoogleSheetData()
     {
         StartCoroutine(FetchDataFromGoogleSheet());
     }
@@ -48,6 +55,7 @@ public class GoogleSheetData : MonoBehaviour
 
         foreach (var item in jsonRp.values)
         {
+            if (item[0] == "Key_ID") continue;
             GameSettingData settingData = new GameSettingData
             {
                 keyID = item[0],
