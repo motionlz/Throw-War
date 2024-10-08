@@ -36,13 +36,13 @@ public class LifeManager : PlayerModule
 
     private void OnOutOfLife()
     {
-        playerManager.animationController.PlayOverrideAnimation(AnimationKey.LOSE_ANIMATION);
+        characterManager.animationController.PlayOverrideAnimation(AnimationKey.LOSE_ANIMATION);
         GameManager.Instance.actionToCurrentPlayer((c) => 
         {
             c.animationController.PlayOverrideAnimation(AnimationKey.WIN_ANIMATION);
         });
 
-        GameManager.Instance.GameEnd();
+        GameManager.Instance.GameEnd(characterManager);
     }
     private void UpdateUI()
     {

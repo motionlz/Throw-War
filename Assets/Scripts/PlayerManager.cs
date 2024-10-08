@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -6,10 +7,9 @@ public class PlayerManager : CharacterManager
 {
     public PlayerController playerController { get; private set; }
 
-    private async void Awake() 
+    protected override void Awake() 
     {
-        Setup();
-        await Task.Delay(5);
+        base.Awake();
         Init();
     }
     protected override void Setup()
@@ -28,5 +28,7 @@ public class PlayerManager : CharacterManager
         lifeManager.SetLife(GlobalKey.PLAYER_HP);
 
         playerController.AssignTo(this);
+
+        powerUpManager.AssignTo(this);
     }
 }

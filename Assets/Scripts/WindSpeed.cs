@@ -22,7 +22,7 @@ public class WindSpeed : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.CompareTag(GlobalTag.THROW_OBJECT) && col.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        if ((col.CompareTag(GlobalTag.THROW_OBJECT) || col.CompareTag(GlobalTag.POWER_THROW_OBJECT)) && col.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
             Vector2 windDirection = new Vector2(Mathf.Sign(windStrength), 0);
             rb.AddForce(windDirection * Mathf.Abs(windStrength));

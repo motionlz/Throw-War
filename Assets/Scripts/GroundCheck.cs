@@ -5,7 +5,7 @@ public class GroundCheck : MonoBehaviour
 {
     private async void OnCollisionEnter2D(Collision2D other) 
     {
-        if (other.gameObject.tag == GlobalTag.THROW_OBJECT)
+        if (other.gameObject.CompareTag(GlobalTag.THROW_OBJECT) || other.gameObject.CompareTag(GlobalTag.POWER_THROW_OBJECT))
         {
             await Task.Delay(100);
             other.gameObject.SetActive(false);

@@ -2,19 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 
-[RequireComponent(typeof(ThrowObject))]
+[RequireComponent(typeof(ThrowObject), typeof(PlayerTimer))]
 public class PlayerController : PlayerModule
 {
     [SerializeField] private ThrowObject throwScript;
+    [SerializeField] private PlayerTimer playerTimer;
     [SerializeField] private int waitTime = 3000;
     private bool isPlayable = false;
     [Header("Throw Settings")]
-    [SerializeField] string throwObjectName;
     [SerializeField] float maxThrowForce = 45f; 
     [SerializeField] float minThrowForce = 10f;
     [SerializeField] float chargeSpeed = 30f;
     private float currentThrowForce;
     private bool isCharging = false;
+    private bool isPowerAttack = false;
+    private bool isDoubleAttack = false;
     [Header("UI Settings")]
     [SerializeField] Slider chargeSlider;
     [SerializeField] GameObject playerIndicator;
@@ -23,10 +25,12 @@ public class PlayerController : PlayerModule
     private void Reset() 
     {
         throwScript = GetComponent<ThrowObject>();
+        playerTimer = GetComponent<PlayerTimer>();
     }
     private void Start() 
     {
         ResetChargeBar();
+        SetTimerAction();
     }
     private void Update()
     {
@@ -37,7 +41,9 @@ public class PlayerController : PlayerModule
     private async void GetInput()
     {
         if (Input.GetMouseButtonDown(0))
-            StartCharge();
+        {
+            CheckStartCharge();
+        }
         
         else if (Input.GetMouseButton(0) && isCharging)
         {
@@ -53,8 +59,10 @@ public class PlayerController : PlayerModule
         SetPlayable(true);
         SetHitBox(false);
         SetIndicatorActive(true);
+        StartTimer();
+        characterManager.powerUpManager.PowerupEnable(true);
     }
-    private void StartCharge()
+    private void CheckStartCharge()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
@@ -63,6 +71,7 @@ public class PlayerController : PlayerModule
             if (h.collider == clickArea)
             {
                 isCharging = true;
+                CancelTimer();
             }
         }
     }
@@ -73,9 +82,30 @@ public class PlayerController : PlayerModule
     }
     private async void ReleaseCharge()
     {
-        throwScript?.Throw(throwObjectName, currentThrowForce);
+        if (isPowerAttack)
+        {
+            isPowerAttack = false;
+            throwScript?.Throw(GlobalThrowObjectKey.POWER_THROW, currentThrowForce);
+        }
+        else if (isDoubleAttack)
+        {
+            SetPlayable(false);
+            isCharging = false;
+            isDoubleAttack = false;
+            var count = GameManager.Instance.gameSetting.GetValueByKey(GlobalKey.DOUBLE_ATTACK_COUNT);
+            for (int i = 1; i <= count; i++)
+            {
+                throwScript?.Throw(GlobalThrowObjectKey.SMALL_THROW, currentThrowForce);
+                if (count == i) break;
+                await Task.Delay(2000);
+            }
+        }
+        else
+            throwScript?.Throw(GlobalThrowObjectKey.NORMAL_THROW, currentThrowForce);
+
         SetPlayable(false);
         isCharging = false;
+        characterManager.powerUpManager.PowerupEnable(false);
 
         await ChargeBarShow(false, 1000);
         ResetThrowForce();
@@ -111,10 +141,45 @@ public class PlayerController : PlayerModule
     }
     private void SetHitBox(bool isActive)
     {
-        playerManager.hitBoxManager.SetColliderActive(isActive);
+        characterManager.hitBoxManager.SetColliderActive(isActive);
     }
     private void SetIndicatorActive(bool isActive)
     {
         playerIndicator.SetActive(isActive);
     }
+    private void StartTimer()
+    {
+        playerTimer.StartCountdown();
+    }
+    private void CancelTimer()
+    {
+        playerTimer.CancelCountdown();
+    }
+    private void SetTimerAction()
+    {
+        playerTimer.OnDone += () =>
+        {
+            SetPlayable(false);
+            SetHitBox(true);
+            SetIndicatorActive(false);
+            characterManager.powerUpManager.PowerupEnable(false);
+            GameManager.Instance.NextTurn();
+        };
+    }
+
+    public void DoubleAttackSkill()
+    {
+        isDoubleAttack = true;
+    }
+    public void PowerAttackSkill()
+    {
+        isPowerAttack = true;
+    }
+}
+
+public static class GlobalThrowObjectKey
+{
+    public const string NORMAL_THROW = "NORMAL_THROW";
+    public const string POWER_THROW = "POWER_THROW";
+    public const string SMALL_THROW = "SMALL_THROW";
 }

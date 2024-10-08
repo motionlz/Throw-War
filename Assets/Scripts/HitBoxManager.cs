@@ -31,6 +31,11 @@ public class HitBoxManager : PlayerModule
 
             col.gameObject.SetActive(false);
         }
+        if (col.CompareTag(GlobalTag.POWER_THROW_OBJECT))
+        {
+            PowerHit();
+            col.gameObject.SetActive(false);
+        }
     }
 
     private void BodyHit()
@@ -48,13 +53,21 @@ public class HitBoxManager : PlayerModule
         });
     }
 
+    private void PowerHit()
+    {
+        TakeDamage(GameManager.Instance.gameSetting.GetValueByKey(GlobalKey.POWER_ATTACK_DAMAGE), () =>
+        {
+            PlayAnimation(AnimationKey.HEAD_HIT_ANIMATION, 1500);
+        });
+    }
+
     private void PlayAnimation(string key, int delay)
     {
-        playerManager.animationController.PlayAnimation(key, delay);
+        characterManager.animationController.PlayAnimation(key, delay);
     }
     private void TakeDamage(float value, Action OnDamage = null)
     {
-        playerManager.lifeManager.TakeDamage(value, OnDamage);
+        characterManager.lifeManager.TakeDamage(value, OnDamage);
     }
 
     public void SetColliderActive(bool isActive)

@@ -15,18 +15,38 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] BotManager botManager;
     private Queue<CharacterManager> turnQueue = new Queue<CharacterManager>();
     private CharacterManager currentPlayer;
-    protected async override void InitAfterAwake()
+    private bool isGameEnd = false;
+    protected override void InitAfterAwake()
     {
-        await Task.Delay(2);
-        player1Manager.lifeManager.SetLifeBar(UICenter.Instance.rightLifeBar);
-        player2Manager.lifeManager.SetLifeBar(UICenter.Instance.leftLifeBar);
-        botManager.lifeManager.SetLifeBar(UICenter.Instance.leftLifeBar);
+        Init(false);
     }
-
-    private async void Start() 
+    private void Init(bool isBot)
+    {
+        player1Manager.OnInit += (l, p) => 
+        { 
+            l.SetLifeBar(UICenter.Instance.rightLifeBar);
+            p.AssignButton(UICenter.Instance.rightPowerUpUI);
+        };
+        if (isBot)
+        {
+            botManager.OnInit += (l, p) => 
+            { 
+                l.SetLifeBar(UICenter.Instance.leftLifeBar);
+                p.AssignButton(UICenter.Instance.leftPowerUpUI);
+            };
+        }
+        else
+        {
+            player2Manager.OnInit += (l, p) => 
+            { 
+                l.SetLifeBar(UICenter.Instance.leftLifeBar);
+                p.AssignButton(UICenter.Instance.leftPowerUpUI);
+            };
+        }
+    }
+    public void OnStartGame()
     {
         StartSetup(false);
-        await Task.Delay(10);
         NextTurn();
     }
     private void StartSetup(bool isBot)
@@ -51,6 +71,7 @@ public class GameManager : Singleton<GameManager>
 
     public void NextTurn()
     {
+        if(isGameEnd) return;
         windSpeed.RandomWindSpeed();
 
         var nextPlayer = turnQueue.Dequeue();
@@ -76,14 +97,27 @@ public class GameManager : Singleton<GameManager>
         action.Invoke(currentPlayer);
     }
 
-    public void GameEnd()
+    public void GameEnd(CharacterManager character)
     {
         DisableAllPlayer();
+        isGameEnd = true;
+
+        UICenter.Instance.gameOverUI.SetWinPlayer(GetPlayerName(character));
     }
     private void DisableAllPlayer()
     {
         player1Manager.playerController.enabled = false;
         player2Manager.playerController.enabled = false;
         //botManager.enabled = false;
+    }
+
+    private string GetPlayerName(CharacterManager character)
+    {
+        if (character == player1Manager)
+            return "P2";
+        if (character == player2Manager)
+            return "P1";
+        else
+            return "P1";
     }
 }
